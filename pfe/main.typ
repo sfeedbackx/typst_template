@@ -26,5 +26,6 @@
 #parbreak()
 
 #include "chapters/ch02-host-organizations-project-context.typ"
+#include "chapters/ch03.typ"
 
 

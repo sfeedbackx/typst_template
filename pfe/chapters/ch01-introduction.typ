@@ -6,5 +6,5 @@
 #v(20pt)
 // the content of the introduction 
 #text(size: 15pt ,style: "italic")[
- General introduction 
+ General introduction :
 ]

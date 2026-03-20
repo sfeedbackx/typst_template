@@ -15,7 +15,7 @@
 // --- List of Figures ---
 #outline(
   title: [List of Figures],
-  target: figure.where(kind: image),
+  target: figure.where(kind: image).or(figure.where(kind: table)),
 )
 #pagebreak()
 // --- List of Abbreviations ---
