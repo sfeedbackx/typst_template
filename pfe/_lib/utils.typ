@@ -1,13 +1,46 @@
-// chapter  box with title
+
+#let titleref(label) = context {
+  // Creates a clickable section reference like "Section(2.3)" from a heading label.
+  let target = query(label).first()
+  let num = counter(heading).at(target.location())
+  link(label)[#text(fill: blue, [Section(#num.map(str).join("."))])]
+}
+
+#let figureref(label) = context {
+  // Creates a clickable figure reference like "Figure 1.2" from an image label.
+  let target = query(label).first()
+  let num = counter(figure.where(kind: image)).at(target.location())
+  link(label)[#text(fill: blue, [Figure #num.map(str).join(".")])]
+}
+
+#let note(body) = block(
+  // Reusable highlighted note callout.
+  width: 100%,
+  inset: (left: 12pt, top: 6pt, bottom: 6pt, right: 8pt),
+  stroke: (left: 3pt + blue),
+  fill: blue.lighten(90%),
+  radius: (right: 4pt),
+)[#text(weight: "bold", fill: blue)[Note: ]#body]
+
+#let definition(body) = block(
+  // Reusable highlighted definition callout.
+  width: 100%,
+  inset: (left: 12pt, top: 6pt, bottom: 6pt, right: 8pt),
+  stroke: (left: 3pt + green),
+  fill: green.lighten(90%),
+  radius: (right: 4pt),
+)[#text(weight: "bold", fill: green, hyphenate: false)[Definition: ]#body]
+
+// Draws the framed chapter-title block used on chapter opening pages.
 #let title_box_chapter(content) = {
   align(center, block(
     width: 100%,
-    stroke: ( y: 1pt + black),
+    stroke: (y: 1pt + black),
     inset: 80pt,
-      text(size: 18pt, weight: "bold",  content)
+    text(size: 18pt, weight: "bold", content),
   ))
 }
-// inline title ----chap---
+// Renders centered inline title with horizontal lines on both sides.
 #let inline_title(content) = {
   grid(
     columns: (1fr, auto, 1fr),
@@ -18,20 +51,21 @@
     line(length: 100%, stroke: 4pt),
   )
 }
-// chapter content table 
+// Builds a mini chapter outline containing level-2 headings and page numbers.
+// It only lists headings that belong to the current chapter.
 #let chapter_outline() = context {
-  // Find the current chapter we are in
+  // Find the current level-1 heading (chapter).
   let before = query(heading.where(level: 1).before(here()))
   if before.len() == 0 { return }
   let current_chap = before.last()
-  
-  // Find the next chapter to know where to stop
+
+  // Find the next chapter so we know where the current one ends.
   let after = query(heading.where(level: 1).after(here()))
-  
-  // Get all level 2 headings after current chapter
+
+  // Collect level-2 headings after current chapter start.
   let all_h2 = query(heading.where(level: 2).after(current_chap.location()))
-  
-  // Filter to only those before next chapter (if exists)
+
+  // Keep only level-2 headings before next chapter (if any).
   let chapter_h2 = if after.len() > 0 {
     let next_loc = after.first().location()
     all_h2.filter(h => {
@@ -42,14 +76,14 @@
   } else {
     all_h2
   }
-  
-  // Display them with numbering and page numbers
+
+  // Render section number, section title link, dot leaders, and page link.
   for h in chapter_h2 {
     let page_num = counter(page).at(h.location()).first()
     let h_num = counter(heading).at(h.location())
-    
+
     box(width: 100%)[
-      #text()[#h_num.at(1)] // Section number (level 2)
+      #text()[#h_num.at(1)] // level-2 section number
       #box(width: 10pt)
       #link(h.location())[#h.body]
       #box(width: 1fr, repeat[.])
@@ -59,17 +93,17 @@
     v(0.5em)
   }
 }
-// cover page box title 
+// Draws the framed title block used in the cover page.
 #let title_box(content) = {
   align(center, block(
     width: 100%,
-    stroke: ( y: 2pt + blue.darken(20%)),
+    stroke: (y: 2pt + blue.darken(20%)),
     inset: 3pt,
     block(
       width: 100%,
       stroke: (paint: black, thickness: 0.5pt),
       inset: (y: 20pt),
-      text(size: 18pt, weight: "bold", content)
-    )
+      text(size: 18pt, weight: "bold", content),
+    ),
   ))
 }

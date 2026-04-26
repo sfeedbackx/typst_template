@@ -11,7 +11,6 @@
   },
   numbering:"i")
   #counter(page).update(1)
-  #include "signature.typ"
   #include "dedication.typ"
   #include "acknowledgment.typ"
   #include "navigation.typ"

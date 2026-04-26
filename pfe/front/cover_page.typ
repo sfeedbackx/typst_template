@@ -4,32 +4,28 @@
 // This file generates the cover page for the PFE report.
 //
 // HOW TO USE:
-// - Only modify variables inside "CONTENT VARIABLES".
-// - Layout code below controls positioning.
-// - Logos paths must be valid relative paths.
-//
-// NOTE:
-// Avoid modifying grid or align unless you understand
-// Typst layout system.
+// - Edit only variables in "CONTENT VARIABLES".
+// - Keep layout blocks (`grid`, `align`, `pad`) unless you want to redesign.
+// - Logo paths must be valid relative paths.
 // ======================================================
 
-#import "../_lib/utils.typ": title_box 
-// Import custom title box component (defined externally)
+#import "../_lib/utils.typ": title_box
+// Imports reusable framed title component for the project title section.
 
 #set page(margin: (top: 20pt, rest: 30pt))
-// Global page margin settings
+// Page margins used by all cover page blocks.
 
 
 // ======================================================
 // CONTENT VARIABLES
 // ------------------------------------------------------
 // Edit ONLY these values to customize the cover.
-// Everything below will update automatically.
+// Layout sections below consume these values automatically.
 // ======================================================
 
-#let main_title = [Report End of Studies Project] // Main title displayed at top
-#let presented_for = [Presented in view of obtaining the title of :] // Subtitle
-#let degree = [ // Degree description (use "\" for line break)
+#let main_title = [Report End of Studies Project] // Main headline shown near top
+#let presented_for = [Presented in view of obtaining the title of :] // Intro sentence
+#let degree = [ // Degree block (use "\" to force line breaks)
    National Engineering Degree in Computer Science \
    Software engineering and information systems
 ]
@@ -41,11 +37,11 @@
 #let faculty = [FACULTY OF SCIENCES OF TUNIS]
 #let department = [Computer Science Department]
 
-// Student info
+// Student identity
 #let student_name = [SFAR AHMED KHALIL] // Student full name
 #let student_label = [Realized By :] // Label before name
 
-// Project info
+// Project identity
 #let project_title = [ // Project title (supports multiline)
   Building Trust in Blockchain: A Formal \
   verification approach
@@ -61,11 +57,11 @@
 #let host_org = [RISQUE]
 #let host_org_name = [Laboratoire d'Informatique SFAR]
 
-// Student info
+// Student class information
 #let student_class = [GLSI3 - N° 554545454545] // Class and identifier
 #let academic_year = [Academic Year 2024 - 2025]
 
-// Asset paths (logos)
+// Logo file paths (relative to this file)
 #let logo_fst = "../assets/FSTLOGO.png"
 #let logo_utm = "../assets/Logo_UTM.png"
 #let logo_host_org = "../assets/FSTLOGO.png"
@@ -73,20 +69,20 @@
 
 
 // ======================================================
-// HEADER SECTION (University Text and Logos)
-// Layout: [Left Logo] [Centered Text] [Right Logo]
+// HEADER SECTION
+// Layout: [Left Logo] [Centered University Text] [Right Logo]
 // ======================================================
 #grid(
-  // how much each cell take space 
+  // Column width distribution.
   columns: (1fr, 4fr ,1fr),
-  //space between the cells 
+  // Space between columns.
   column-gutter: 5pt,
   align: ( horizon,center, horizon ),
-  // image right you can adjust the width as you like
+  // Left logo cell.
  [
       #image(logo_fst, width: 100pt ),
   ],
-  // text center 
+  // Centered university/faculty text block.
   [
     #set text(size: 14pt, weight: "bold")
     #republic \ 
@@ -98,13 +94,13 @@
   #text(size: 12pt, weight: "regular")[#department]
 ]
   ],
-  //right image 
+  // Right logo cell.
   [#image(logo_utm , width: 90pt)]
   
 )
 
 #v(3em) 
-// Vertical spacing
+// Vertical spacing between header and title section.
 
 
 // ======================================================
@@ -132,7 +128,8 @@
 #v(1em)
 
 // ======================================================
-// PROJECT TITLE BOX (custom component)
+// PROJECT TITLE BOX
+// Uses imported `title_box` component for consistent framing.
 // ======================================================
 #title_box([
 #project_title
@@ -142,7 +139,7 @@
 
 // ======================================================
 // JURY MEMBERS SECTION
-// Left column = labels, right column = names
+// Left column = role labels, right column = configured names.
 // ======================================================
 #grid(
   columns: (20pt ,0.5fr,1fr),
@@ -180,7 +177,7 @@
 ]
 #v(1em)
 
-// Host organization logo placement
+// Host organization logo placement.
 #pad(left :100pt)[
   #image(logo_host_org , width: 100pt)
 ]
@@ -206,5 +203,5 @@
   #text()[#academic_year]
 ]
 
-// Page break for next content
+// Force next page after cover page.
 #pagebreak()

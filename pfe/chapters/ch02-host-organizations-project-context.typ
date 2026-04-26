@@ -1,41 +1,21 @@
 // ======================================================
-// CHAPTER TEMPLATE USAGE
+// CHAPTER EXAMPLE (Template Usage)
 // ------------------------------------------------------
-// PURPOSE:
-// This file creates a new chapter using the shared
-// chapter template.
+// This file demonstrates how to build chapter content with
+// the shared `chapter_page(...)` template and spacing tokens.
 //
-// HOW TO CUSTOMIZE:
-// 1) Change chapter title:
-//        #let chapter_title = [...]
+// To create another chapter, copy this file and change:
+// - chapter number in `#chapter_page("N", ...)`
+// - `chapter_title`
+// - `chapter_body`
 //
-// 2) Write chapter content inside:
-//        #let chapter_body = [...]
-//
-// 3) The chapter page is generated automatically using
-//    the function: #chapter_page(...)
-//
-// ------------------------------------------------------
-// HOW TO CREATE ANOTHER CHAPTER:
-//
-// Copy this file or duplicate this block and change:
-//
-//   - chapter number ("1")
-//   - chapter_title
-//   - chapter_body
-//
-// Example:
-//
-//   #chapter_page("2", [New Title])[
-//       Your content here
-//   ]
-//
-// note that you need to add the new chapter in separate  file and included in main
+// Then import the new file in `main.typ`.
 // ======================================================
 
 // Import chapter template (contains layout and styles)
-#import "../_templates/chapter.typ":*
+#import "../_templates/chapter.typ": *
 
+#import "../constant.typ": *
 
 // ======================================================
 // CUSTOMIZATION VARIABLES
@@ -43,11 +23,60 @@
 
 // Chapter title (change this for each chapter)
 #let chapter_title = [Host Organizations and Project Context]
+#let fakepar = context {
+  // Keeps heading spacing tight after custom `show heading` styles.
+  box()
+  v(-measure(block() + block()).height)
+}
 
+#show heading.where(level: 2): it => {
+  text(size: 14pt, weight: "bold")[#it]
+  fakepar
+}
+
+#show heading.where(level: 3): it => {
+  text(size: 12pt, weight: "bold", style: "italic")[#it]
+  fakepar
+}
+
+#show heading.where(level: 4): it => {
+  text(size: 12pt, style: "italic")[#it]
+  fakepar
+}
 // Chapter content
 // Write your chapter sections here
 #let chapter_body = [
- #heading(depth: 2)[chapter title]
+  #text(size: 14pt, weight: "bold")[Introduction]
+  #lvl_4_ab_lvl_2_dwn
+  #text()[
+    #lorem(100)
+  ]
+  #lvl_2_ab
+  #heading(depth: 2)[lvl2_title]
+  #lvl_4_ab_lvl_2_dwn
+  #heading(depth: 3)[lvl3_title]
+  #lvl_3_dwn_lvl_5_ab
+  #text()[
+    #lorem(100)
+  ]
+  #lvl_2_ab
+  #heading(depth: 2)[lvl2_title]
+  #lvl_4_ab_lvl_2_dwn
+  #text()[
+    #lorem(100)
+  ]
+  //#pagebreak()
+  #text()[
+    #lorem(20)
+    #vs-s
+    #list(
+      [#lorem(5)],
+      [#lorem(5)],
+    )
+  ]
+
+
+
 ]
 
 // ======================================================
@@ -66,7 +95,6 @@
 //   [ ... ]         -> Chapter content
 // ======================================================
 #chapter_page("1", chapter_title)[
- #chapter_body
+  #chapter_body
 ]
-
 
