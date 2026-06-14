@@ -1,9 +1,19 @@
+// ======================================================
+// SPACING CONSTANTS
+// ------------------------------------------------------
+// Use these throughout your chapters for consistent
+// vertical spacing between elements.
+//
+// EXAMPLE:
+//   #heading(depth: 2)[Section Title]
+//   #lvl_4_ab_lvl_2_dwn
+//   Paragraph text...
+//
+//   #vs-m
+//   #heading(depth: 3)[Sub-section Title]
+// ======================================================
 
-// Legacy heading-spacing tokens used in chapter files.
-// Naming guide:
-// - *_ab: space above a heading block
-// - *_dwn: space below a heading block
-// - *_ab_*_dwn: mixed spacing for transitions between levels
+// Legacy spacing helpers
 #let lvl_2_ab = v(1.5em)
 #let lvl_4_ab_lvl_2_dwn = v(0.8em)
 #let lvl_3_ab = v(1em)
@@ -11,14 +21,14 @@
 #let lvl_4_dwn = v(0.4em)
 #let lvl_5_dwn = v(0.3em)
 
-
-// Preferred generic spacing scale for new content.
-// Use these when spacing is not tied to a specific heading-level rule.
-#let vs-xxs = v(0.25em) // tiny gap
-#let vs-xs = v(0.5em)   // extra small gap
-#let vs-s = v(0.75em)   // small gap
-#let vs-m = v(1em)      // medium/base gap
-#let vs-l = v(1.5em)    // large gap
-#let vs-xl = v(2em)     // extra large gap
-#let vs-xxl = v(3em)    // section break gap
+// ─── VERTICAL SPACING SCALE ──────────────────────────
+#let vs-xxs = v(0.25em)   // tiny gap
+#let vs-xs = v(0.5em)     // extra small
+#let vs-s = v(0.75em)     // small
+#let vs-m = v(1em)        // medium (base)
+#let vs-l = v(1.5em)      // large
+#let vs-xl = v(2em)       // extra large
+#let vs-xxl = v(3em)      // huge (between sections)
+#let vs-xxxl = v(4em)     // extra huge
+#let vs-xxxxl = v(7.2em)  // extra huge (figure spacing)
 

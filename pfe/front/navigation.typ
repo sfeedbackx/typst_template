@@ -1,42 +1,47 @@
+// ======================================================
+// TABLE OF CONTENTS, FIGURES, TABLES & ABBREVIATIONS
+// ======================================================
+
 #set heading(numbering: "1.1.1")
 
-
-#import "../chapters/ch03-Conception-Analysis.typ": ch03_abr
-#let abbreviationsDict = (
-  ch03_abr
-)
+#import "../abbreviations.typ": abbreviations
 #let abbreviationsList = ()
-#abbreviationsList.push(abbreviationsDict)
+#abbreviationsList.push(abbreviations)
 
-
-
-//this to make space between the <Table of content>
 #show outline: it => {
   show heading: set block(below: 2em)
   it
 }
-//this for big title  1 , 2 space in content table
-#show outline.entry.where(
-  level: 1,
-): set block(above: 1em, below: 1em)
-// --- Table of Contents ---
-#outline(indent: 1.5em, title: [Table of contents])
 
+#show outline.entry.where(level: 1): set block(above: 1em, below: 1em)
+#show outline.entry.where(level: 3): set block(above: 1em, below: 1em)
+
+// --- Table of Contents ---
+#outline(indent: 1.5em, title: [Table of Contents])
 #pagebreak()
+
 // --- List of Figures ---
 #outline(
   title: [List of Figures],
-  target: figure.where(kind: image).or(figure.where(kind: table)),
+  target: figure.where(kind: image),
 )
 #pagebreak()
+
+// --- List of Tables ---
+#outline(
+  title: [List of Tables],
+  target: figure.where(kind: table),
+)
+#pagebreak()
+
 // --- List of Abbreviations ---
 #heading(level: 1, outlined: false, numbering: none)[List of Abbreviations]
-#v(3em) // vertical space
+#v(3em)
+
 #for dic in abbreviationsList [
   #for (key, value) in dic [
     / #key: #value
   ]
 ]
-/ PoS: Proof of Stake
 
 #pagebreak()

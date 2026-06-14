@@ -4,64 +4,68 @@
 // This file generates the cover page for the PFE report.
 //
 // HOW TO USE:
-// - Edit only variables in "CONTENT VARIABLES".
-// - Keep layout blocks (`grid`, `align`, `pad`) unless you want to redesign.
-// - Logo paths must be valid relative paths.
+// - Only modify variables inside "CONTENT VARIABLES".
+// - Layout code below controls positioning.
+// - Logos paths must be valid relative paths.
+//
+// NOTE:
+// Avoid modifying grid or align unless you understand
+// Typst layout system.
 // ======================================================
 
 #import "../_lib/utils.typ": title_box
-// Imports reusable framed title component for the project title section.
+// Import custom title box component (defined externally)
 
 #set page(margin: (top: 20pt, rest: 30pt))
-// Page margins used by all cover page blocks.
+// Global page margin settings
 
 
 // ======================================================
 // CONTENT VARIABLES
 // ------------------------------------------------------
 // Edit ONLY these values to customize the cover.
-// Layout sections below consume these values automatically.
+// Everything below will update automatically.
 // ======================================================
 
-#let main_title = [Report End of Studies Project] // Main headline shown near top
-#let presented_for = [Presented in view of obtaining the title of :] // Intro sentence
-#let degree = [ // Degree block (use "\" to force line breaks)
-   National Engineering Degree in Computer Science \
-   Software engineering and information systems
+// ======================================================
+// COVER PAGE — CUSTOMIZATION VARIABLES
+// ------------------------------------------------------
+// Replace these values with your own project data.
+// Everything below will update automatically.
+// ======================================================
+
+#let main_title = [Graduation Project Report]
+#let presented_for = [Presented in partial fulfillment of the requirements for:]
+#let degree = [
+  Your Degree Name \
+  Your Specialization
 ]
 
-// University info
-#let republic = [TUNISIAN REPUBLIC]
-#let ministry = [MINISTRY OF HIGHER EDUCATION AND SCIENTIFIC RESEARCH]
-#let university = [UNIVERSITY OF TUNIS EL MANAR]
-#let faculty = [FACULTY OF SCIENCES OF TUNIS]
-#let department = [Computer Science Department]
+#let republic = [YOUR REPUBLIC]
+#let ministry = [YOUR MINISTRY]
+#let university = [YOUR UNIVERSITY]
+#let faculty = [YOUR FACULTY]
+#let department = [Your Department]
 
-// Student identity
-#let student_name = [SFAR AHMED KHALIL] // Student full name
-#let student_label = [Realized By :] // Label before name
+#let student_name = [YOUR FULL NAME]
+#let student_label = [Realized by:]
 
-// Project identity
-#let project_title = [ // Project title (supports multiline)
-  Building Trust in Blockchain: A Formal \
-  verification approach
+#let project_title = [
+  Your Project Title: A Subtitle \
+  or Description of Your Work
 ]
 
-// Jury members
-#let jury_president = [Mrs. SFAR]
-#let jury_reviewer = [Mrs. SFAR]
-#let jury_supervisor = [Mrs. SFAR]
-#let jury_pedagogic_advisor = [Mr. SFAR]
+#let jury_president = [Jury President Name]
+#let jury_reviewer = [Reviewer Name]
+#let jury_supervisor = [Supervisor Name]
+#let jury_pedagogic_advisor = [Pedagogic Advisor Name]
 
-// Host organization
-#let host_org = [RISQUE]
-#let host_org_name = [Laboratoire d'Informatique SFAR]
+#let host_org = []
+#let host_org_name = [Your Host Organization]
 
-// Student class information
-#let student_class = [GLSI3 - N° 554545454545] // Class and identifier
-#let academic_year = [Academic Year 2024 - 2025]
+#let student_class = [Your Class Info]
+#let academic_year = [Academic Year 20XX - 20XX]
 
-// Logo file paths (relative to this file)
 #let logo_fst = "../assets/FSTLOGO.png"
 #let logo_utm = "../assets/Logo_UTM.png"
 #let logo_host_org = "../assets/FSTLOGO.png"
@@ -69,38 +73,37 @@
 
 
 // ======================================================
-// HEADER SECTION
-// Layout: [Left Logo] [Centered University Text] [Right Logo]
+// HEADER SECTION (University Text and Logos)
+// Layout: [Left Logo] [Centered Text] [Right Logo]
 // ======================================================
 #grid(
-  // Column width distribution.
-  columns: (1fr, 4fr ,1fr),
-  // Space between columns.
+  // how much each cell take space
+  columns: (1fr, 4fr, 1fr),
+  //space between the cells
   column-gutter: 5pt,
-  align: ( horizon,center, horizon ),
-  // Left logo cell.
- [
-      #image(logo_fst, width: 100pt ),
+  align: (horizon, center, horizon),
+  // image right you can adjust the width as you like
+  [
+    #image(logo_fst, width: 100pt),
   ],
-  // Centered university/faculty text block.
+  // text center
   [
     #set text(size: 14pt, weight: "bold")
-    #republic \ 
+    #republic \
     #ministry \
     #university
-    
-  #align(horizon)[
-  #text(size: 9.5pt, weight: "bold")[#faculty] \
-  #text(size: 12pt, weight: "regular")[#department]
-]
+
+    #align(horizon)[
+      #text(size: 9.5pt, weight: "bold")[#faculty] \
+      #text(size: 12pt, weight: "regular")[#department]
+    ]
   ],
-  // Right logo cell.
-  [#image(logo_utm , width: 90pt)]
-  
+  //right image
+  [#image(logo_utm, width: 90pt)],
 )
 
-#v(3em) 
-// Vertical spacing between header and title section.
+#v(3em)
+// Vertical spacing
 
 
 // ======================================================
@@ -108,60 +111,59 @@
 // ======================================================
 #align(center)[
   #text(size: 20pt, weight: "bold")[#main_title]
-  
+
   // This stack ensures the lines stay tight together and centered
   #stack(
     spacing: 1em,
-    text(size: 13pt,)[#presented_for],
+    text(size: 13pt)[#presented_for],
     text(size: 14pt, weight: "regular")[
-     #degree
-    ]
+      #degree
+    ],
   )
   #v(0.2em)
-    #text(size: 18pt,)[#student_label] 
-    
-    #text(size: 19pt, weight: "bold")[#student_name]
-  
+  #text(size: 18pt)[#student_label]
+
+  #text(size: 19pt, weight: "bold")[#student_name]
+
 ]
 
 
 #v(1em)
 
 // ======================================================
-// PROJECT TITLE BOX
-// Uses imported `title_box` component for consistent framing.
+// PROJECT TITLE BOX (custom component)
 // ======================================================
 #title_box([
-#project_title
+  #project_title
 ])
 #v(1em)
 
 
 // ======================================================
 // JURY MEMBERS SECTION
-// Left column = role labels, right column = configured names.
+// Left column = labels, right column = names
 // ======================================================
 #grid(
-  columns: (20pt ,0.5fr,1fr),
-  align: (left ),
+  columns: (20pt, 0.5fr, 1fr),
+  align: (left),
   [],
-  [#text(size: 12pt )[Jury president :
+  [#text(size: 12pt)[Jury President:
 
-  Reviewer :
+    Reviewer:
 
-  Supervised by :
+    Supervised by:
 
-  Pedagogic advisor :
-]],
+    Pedagogic Advisor:
+  ]],
   [#text(size: 12pt, weight: "bold")[
-  #jury_president
+    #jury_president
 
-  #jury_reviewer
+    #jury_reviewer
 
-  #jury_supervisor
+    #jury_supervisor
 
-  #jury_pedagogic_advisor
-]]
+    #jury_pedagogic_advisor
+  ]],
 )
 
 #v(1.5em)
@@ -170,29 +172,29 @@
 // HOST ORGANIZATION SECTION
 // ======================================================
 #align(center)[
-    #text(size: 16pt, weight: "regular")[Host organization: #host_org \
+  #text(size: 16pt, weight: "regular")[Host organization: #host_org \
     #host_org_name
-  
+
   ]
 ]
 #v(1em)
 
-// Host organization logo placement.
-#pad(left :100pt)[
-  #image(logo_host_org , width: 100pt)
+// Host organization logo placement
+#align(center)[
+  #image(logo_host_org, width: 79pt)
 ]
 
-#v(1.25em)
+#v(0.8em)
 
 // ======================================================
 // STUDENT CLASS BOX
 // ======================================================
 #align(center, block(
-      width: 60%,
-      stroke: (paint: black, thickness: 0.5pt),
-      inset: (y: 8pt),
-      text(size: 16pt, [#student_class])
-    ))
+  width: 60%,
+  stroke: (paint: black, thickness: 0.5pt),
+  inset: (y: 8pt),
+  text(size: 16pt, [#student_class]),
+))
 
 #v(1.5em)
 
@@ -203,5 +205,5 @@
   #text()[#academic_year]
 ]
 
-// Force next page after cover page.
+// Page break for next content
 #pagebreak()

@@ -1,14 +1,29 @@
+// ======================================================
+// CHAPTER TEMPLATE
+// ------------------------------------------------------
+// This file defines the `chapter_page()` function that
+// provides consistent layout, headers, footers, and
+// typographic settings for every chapter.
+//
+// USAGE:
+//   #import "../_templates/chapter.typ": *
+//
+//   #chapter_page("1", [Chapter Title])[
+//     Your content here...
+//   ]
+// ======================================================
+
 #import "../_lib/utils.typ": chapter_outline, inline_title, title_box_chapter
 
-// Main reusable chapter template.
-// Parameters:
-// - chapter_num: chapter number shown in header/opening page
-// - chapter_title: chapter title displayed in chapter title box
-// - body: chapter content inserted after template styling is applied
+// Renders a full chapter page with title, outline, and content.
+// - chapter_num: string (e.g. "1", "2")
+// - chapter_title: content block
+// - body: chapter content
 #let chapter_page(chapter_num, chapter_title, body) = {
-  // Chapter opening page: no footer or page numbering.
+  // cover page for chapter
   set page(footer: none, numbering: none)
 
+  // Chapter title page with centered heading
   show heading.where(level: 1): it => {
     set align(center)
     text(size: 24pt, weight: "bold")[#it.body]
@@ -22,15 +37,17 @@
   }))
 
   v(80pt)
-  chapter_outline()
-  // The content that follows uses the default chapter body style.
 
+  // Auto-generated outline of section headings in this chapter
+  chapter_outline()
+
+  // Main content page settings with header and footer
   set page(
     paper: "a4",
     footer: context {
       stack(
         dir: ttb,
-        spacing: 5pt, // footer line-to-page-number spacing
+        spacing: 5pt,
         line(length: 100%, stroke: 0.5pt),
         align(center, counter(page).display()),
       )
@@ -38,8 +55,6 @@
     numbering: "1",
     margin: (top: 2.5cm, left: 3cm, right: 2cm, bottom: 2.5em),
     header: context {
-      // Build running header title from current chapter and document title.
-      let title = counter(heading).display() // Or use document.title below
       let doc_title = if document.title != none {
         "Chapter " + chapter_num + "." + h(5pt) + document.title
       } else {
@@ -57,45 +72,43 @@
       ]
     },
   )
-  set text(
-    size: 12pt,
-    lang: "en",
-    hyphenate: true,
-  )
+  // Typography settings
+  set text(size: 12pt, lang: "en", hyphenate: false)
+
   set par(
-    leading: 0.75em, // space between lines (~1.5 line spacing)
-    first-line-indent: 1cm,
-    spacing: 1.2em, // space between paragraphs
+    justify: true,
+    leading: 0.75em,
+    first-line-indent: 0.5cm,
+    spacing: 1.2em,
   )
-  show par: set text(hyphenate: false)
-  //      marker: text(1.5em, baseline: -0.2em, [•]),
+
+  // List styling
   set list(
     indent: 1.8em,
     spacing: 1em,
     body-indent: 0.5em,
-      marker: ([•], [–], [◦]), // bullet style sequence by nesting level
+    marker: ([•], [–], [◦]),
   )
 
-  // Table defaults: styled header row + zebra striping.
+  // Table styling with dark header row and zebra striping
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
   set table(
     stroke: 0.5pt + black,
     inset: 8pt,
     align: left,
-    fill: (col, row) => if row == 0 { rgb("#1a1a6e") } // header row gray
-    else if calc.odd(row) { luma(245) } // zebra striping
+    fill: (col, row) => if row == 0 { rgb("#1a1a6e") }
+    else if calc.odd(row) { luma(245) }
     else { white },
   )
+
+  // Table figures: breakable across pages, italic caption
   show figure.where(kind: table): it => {
-    // Table figure captions are rendered in italic style.
     set block(breakable: true)
     set text(size: 10pt, style: "italic")
     it
   }
 
-  set figure(
-    gap: 0.7em,
-  )
+  set figure(gap: 0.7em)
 
   show figure.caption: it => {
     set text(size: 10pt, style: "italic")
@@ -103,5 +116,6 @@
     it
   }
 
+  // Render the chapter content
   body
 }

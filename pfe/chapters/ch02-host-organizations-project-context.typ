@@ -1,30 +1,17 @@
 // ======================================================
-// CHAPTER EXAMPLE (Template Usage)
+// CHAPTER 2 — Host Organization & Project Context
 // ------------------------------------------------------
-// This file demonstrates how to build chapter content with
-// the shared `chapter_page(...)` template and spacing tokens.
-//
-// To create another chapter, copy this file and change:
-// - chapter number in `#chapter_page("N", ...)`
-// - `chapter_title`
-// - `chapter_body`
-//
-// Then import the new file in `main.typ`.
+// Replace the text below with your own organization
+// context and project background.
 // ======================================================
 
-// Import chapter template (contains layout and styles)
 #import "../_templates/chapter.typ": *
-
+#import "../_lib/utils.typ": definition, note
 #import "../constant.typ": *
 
-// ======================================================
-// CUSTOMIZATION VARIABLES
-// ======================================================
+#let chapter_title = [Host Organization and Project Context]
 
-// Chapter title (change this for each chapter)
-#let chapter_title = [Host Organizations and Project Context]
 #let fakepar = context {
-  // Keeps heading spacing tight after custom `show heading` styles.
   box()
   v(-measure(block() + block()).height)
 }
@@ -33,68 +20,62 @@
   text(size: 14pt, weight: "bold")[#it]
   fakepar
 }
-
 #show heading.where(level: 3): it => {
   text(size: 12pt, weight: "bold", style: "italic")[#it]
   fakepar
 }
 
-#show heading.where(level: 4): it => {
-  text(size: 12pt, style: "italic")[#it]
-  fakepar
-}
-// Chapter content
-// Write your chapter sections here
 #let chapter_body = [
   #text(size: 14pt, weight: "bold")[Introduction]
   #lvl_4_ab_lvl_2_dwn
   #text()[
-    #lorem(100)
+    This chapter presents the institutional and project context in which this work took
+    place. It introduces the host organization, the project framework, and the objectives
+    that guided the development process.
   ]
   #lvl_2_ab
-  #heading(depth: 2)[lvl2_title]
+  #heading(depth: 2)[Host Organization]
   #lvl_4_ab_lvl_2_dwn
-  #heading(depth: 3)[lvl3_title]
-  #lvl_3_dwn_lvl_5_ab
   #text()[
-    #lorem(100)
+    Your host organization is a company or institution that provided the environment and
+    resources for this project. Describe its core business, history, and relevance to
+    your work.
+
+    Include details about the organization's size, market position, and the specific
+    department or team you worked with during the project.
   ]
   #lvl_2_ab
-  #heading(depth: 2)[lvl2_title]
+  #heading(depth: 2)[Project Context and Objectives]
   #lvl_4_ab_lvl_2_dwn
   #text()[
-    #lorem(100)
-  ]
-  //#pagebreak()
-  #text()[
-    #lorem(20)
-    #vs-s
+    Describe the broader context that motivated this project. What problem does it solve?
+    Why is it important? What are the main objectives?
+
+    The objectives of this project are:
     #list(
-      [#lorem(5)],
-      [#lorem(5)],
+      spacing: 1.5em,
+      [Objective 1: describe the first goal],
+      [Objective 2: describe the second goal],
+      [Objective 3: describe the third goal],
     )
   ]
+  #lvl_2_ab
+  #heading(depth: 2)[Methodology Overview]
+  #lvl_4_ab_lvl_2_dwn
+  #text()[
+    Briefly describe the methodology adopted for this project. This could include Agile
+    practices, project management tools, collaboration workflows, and development
+    processes.
 
-
-
+    #note()[
+      Refer to the Methodology chapter for a detailed comparison of different
+      development methodologies and the rationale for your choice.
+    ]
+  ]
 ]
 
-// ======================================================
-// DOCUMENT SETTINGS
-// ======================================================
-// Set document metadata (title used in PDF properties)
 #set document(title: chapter_title)
 
-
-// ======================================================
-// CHAPTER GENERATION
-// ------------------------------------------------------
-// Parameters:
-//   "1"             -> Chapter number
-//   chapter_title   -> Chapter title
-//   [ ... ]         -> Chapter content
-// ======================================================
-#chapter_page("1", chapter_title)[
+#chapter_page("2", chapter_title)[
   #chapter_body
 ]
-
