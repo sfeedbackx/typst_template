@@ -1,11 +1,9 @@
-# PFE Report Template in Typst
+# Typst Templates
 
-This template helps you produce a structured engineering report with:
+This repository contains two Typst templates:
 
-- A customizable cover page
-- Reusable chapter layout
-- Styled headings, tables, figures, and lists
-- Utility helpers for references and callouts
+- **PFE Report** (`pfe/`) — structured engineering report with cover page, chapters, and utility helpers.
+- **CV** (`cv/`) — a clean, sectioned curriculum vitae template.
 
 ## 1) Prerequisites
 
@@ -16,13 +14,15 @@ Choose one method:
 
 ## 2) Run with Docker
 
+### PFE Report
+
 Build once:
 
 ```bash
 docker run --rm \
   -v "$(pwd):/work" \
   ghcr.io/typst/typst:0.14.2 \
-  compile /work/main.typ /work/main.pdf
+  compile /work/pfe/main.typ /work/pfe/report.pdf
 ```
 
 Live watch:
@@ -31,33 +31,63 @@ Live watch:
 docker run --rm \
   -v "$(pwd):/work" \
   ghcr.io/typst/typst:0.14.2 \
-  watch /work/main.typ /work/main.pdf
+  watch /work/pfe/main.typ /work/pfe/report.pdf
+```
+
+### CV
+
+Build once:
+
+```bash
+docker run --rm \
+  -v "$(pwd):/work" \
+  ghcr.io/typst/typst:0.14.2 \
+  compile /work/cv/main.typ /work/cv/cv.pdf
+```
+
+Live watch:
+
+```bash
+docker run --rm \
+  -v "$(pwd):/work" \
+  ghcr.io/typst/typst:0.14.2 \
+  watch /work/cv/main.typ /work/cv/cv.pdf
 ```
 
 ## 3) Run with Local Typst
 
 ```bash
-typst watch main.typ main.pdf
+# PFE
+typst watch pfe/main.typ pfe/report.pdf
+
+# CV
+typst watch cv/main.typ cv/cv.pdf
 ```
 
 ## 4) Where to Edit
 
-- Cover page values: `front/cover_page.typ`
-- Chapter content: `chapters/ch02-host-organizations-project-context.typ`, `chapters/ch03-Conception-Analysis.typ`
-- Chapter template behavior: `_templates/chapter.typ`
-- Helper functions: `_lib/utils.typ`
-- Spacing scale: `constant.typ`
+### PFE Report
+
+- Cover page values: `pfe/front/cover_page.typ`
+- Chapter content: `pfe/chapters/ch02-host-organizations-project-context.typ`, `pfe/chapters/ch03-Conception-Analysis.typ`
+- Chapter template behavior: `pfe/_templates/chapter.typ`
+- Helper functions: `pfe/_lib/utils.typ`
+- Spacing scale: `pfe/constant.typ`
+
+### CV
+
+- CV content: `cv/main.typ` (edit sections directly: Header, Experience, Projects, Skills, etc.)
 
 ## 5) Add a New Chapter
 
-1. Duplicate a chapter file from `chapters/`.
+1. Duplicate a chapter file from `pfe/chapters/`.
 2. Update `chapter_title` and `chapter_body`.
 3. Set chapter number in `#chapter_page("N", chapter_title)[...]`.
-4. Include the file in `main.typ`.
+4. Include the file in `pfe/main.typ`.
 
 ## 6) Reference Helpers
 
-Available helpers from `_lib/utils.typ`:
+Available helpers from `pfe/_lib/utils.typ`:
 
 - `#figureref(<label>)`: clickable figure reference
 - `#titleref(<label>)`: clickable section reference
@@ -80,8 +110,9 @@ As shown in #figureref(<fig_arch>), the flow is introduced in #titleref(<sec_ove
 ## 7) Troubleshooting
 
 - `typst: command not found`: use Docker commands above.
-- Broken image/logo: verify relative file paths.
-- Chapter not shown: ensure it is included in `main.typ`.
+- Broken image/logo: verify relative file paths (assets are in `cv/assets/` for CV, `pfe/assets/` for PFE).
+- Chapter not shown: ensure it is included in `pfe/main.typ`.
+- CV not building: run from the repository root, not from `cv/`.
 
 ## 8) Contribution
 
