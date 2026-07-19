@@ -1,9 +1,10 @@
 # Typst Templates
 
-This repository contains two Typst templates:
+This repository contains Typst templates:
 
 - **PFE Report** (`pfe/`) — structured engineering report with cover page, chapters, and utility helpers.
 - **CV** (`cv/`) — a clean, sectioned curriculum vitae template.
+- **Motivation Letter** (`motivation-letter/`) — a formal motivation letter template for applications.
 
 ## 1) Prerequisites
 
@@ -54,6 +55,26 @@ docker run --rm \
   watch /work/cv/main.typ /work/cv/cv.pdf
 ```
 
+### Motivation Letter
+
+Build once:
+
+```bash
+docker run --rm \
+  -v "$(pwd):/work" \
+  ghcr.io/typst/typst:0.14.2 \
+  compile /work/motivation-letter/main.typ /work/motivation-letter/motivation-letter.pdf
+```
+
+Live watch:
+
+```bash
+docker run --rm \
+  -v "$(pwd):/work" \
+  ghcr.io/typst/typst:0.14.2 \
+  watch /work/motivation-letter/main.typ /work/motivation-letter/motivation-letter.pdf
+```
+
 ## 3) Run with Local Typst
 
 ```bash
@@ -62,6 +83,9 @@ typst watch pfe/main.typ pfe/report.pdf
 
 # CV
 typst watch cv/main.typ cv/cv.pdf
+
+# Motivation Letter
+typst watch motivation-letter/main.typ motivation-letter/motivation-letter.pdf
 ```
 
 ## 4) Where to Edit
@@ -77,6 +101,10 @@ typst watch cv/main.typ cv/cv.pdf
 ### CV
 
 - CV content: `cv/main.typ` (edit sections directly: Header, Experience, Projects, Skills, etc.)
+
+### Motivation Letter
+
+- Letter content: `motivation-letter/main.typ` (edit sections directly: Subject, Salutation, Body paragraphs, Sign-off)
 
 ## 5) Add a New Chapter
 
@@ -113,6 +141,7 @@ As shown in #figureref(<fig_arch>), the flow is introduced in #titleref(<sec_ove
 - Broken image/logo: verify relative file paths (assets are in `cv/assets/` for CV, `pfe/assets/` for PFE).
 - Chapter not shown: ensure it is included in `pfe/main.typ`.
 - CV not building: run from the repository root, not from `cv/`.
+- Motivation letter not building: run from the repository root, not from `motivation-letter/`.
 
 ## 8) Contribution
 
